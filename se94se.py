@@ -4,6 +4,7 @@ import urllib.request
 import os
 import codecs
 import re
+import time
 class MySql:
 	def __init__(self):
 		print('建立数据库')
@@ -45,7 +46,6 @@ class Photo:
 class download:
 	def __init__(self,url,title):
 		imgPath=r'./photo/'+title
-		filesname=url[30:-4]
 		#print("下载:",url)
 		try:
 			UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'
@@ -57,8 +57,8 @@ class download:
 			print('未下载成功：',url)
 		#创建文件夹，用于放图片
 		mkdir('photo/'+title)
-		filename=os.path.join(imgPath,str(filesname)+'.jpg')
-		#print("名字："+filename)
+		filename=os.path.join(imgPath,str(str(time.time())[:-8])+'.jpg')
+		#print("名字："+str(time.time())[:-8])
 		with open(filename,'wb') as f:
 			f.write(res.read())
 			print('下载完成\n')
@@ -84,7 +84,7 @@ def mkdir(path):
         # 如果目录存在则不创建，并提示目录已存在
         #print (path+' 目录已存在')
         return False
-            
+     
 if __name__=='__main__':
 	#ms=MySql()
 	#ms.create_table("create table photo(id integer primary key autoincrement not null,name text,img text)")
@@ -100,7 +100,7 @@ if __name__=='__main__':
 	#		print(item)
 	#ms.get_save()
 	mkdir('photo')
-	i=20171218251776
+	i=20171218251869
 	while True:
 		url = "http://94kovv.com/94xx/01/zipaitoupai/"+str(i)+".html"
 		f = codecs.open('se94se.txt','w','utf-8')
@@ -109,6 +109,7 @@ if __name__=='__main__':
 		Photo(url)
 		i=i-1
 		if i==20170401145192:
+			print("数据抓取完了")
 			break
 
 
