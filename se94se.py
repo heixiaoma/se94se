@@ -31,7 +31,6 @@ class Photo:
 			return
 		m = re.search("<title>.*</title>", data)
 		title=m.group().strip("</title>")
-		mkdir('photo/'+title)
 		print(title)
 		reg=re.compile('<img src="https:.*?">')
 		match = reg.findall(data)
@@ -47,7 +46,7 @@ class download:
 	def __init__(self,url,title):
 		imgPath=r'./photo/'+title
 		filesname=url[30:-4]
-		print("下载:",url)
+		#print("下载:",url)
 		try:
 			UA = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'
 			req = urllib.request.Request(url, headers={'User-Agent': UA})
@@ -56,6 +55,8 @@ class download:
 				print('未下载成功：',url)
 		except Exception as e:
 			print('未下载成功：',url)
+		#创建文件夹，用于放图片
+		mkdir('photo/'+title)
 		filename=os.path.join(imgPath,str(filesname)+'.jpg')
 		#print("名字："+filename)
 		with open(filename,'wb') as f:
@@ -81,7 +82,7 @@ def mkdir(path):
         return True
     else:
         # 如果目录存在则不创建，并提示目录已存在
-        print (path+' 目录已存在')
+        #print (path+' 目录已存在')
         return False
             
 if __name__=='__main__':
@@ -99,7 +100,7 @@ if __name__=='__main__':
 	#		print(item)
 	#ms.get_save()
 	mkdir('photo')
-	i=20171218251852
+	i=20171218251776
 	while True:
 		url = "http://94kovv.com/94xx/01/zipaitoupai/"+str(i)+".html"
 		f = codecs.open('se94se.txt','w','utf-8')
@@ -107,8 +108,6 @@ if __name__=='__main__':
 		f.close()
 		Photo(url)
 		i=i-1
-		print(url)
-		print(i)
 		if i==20170401145192:
 			break
 
